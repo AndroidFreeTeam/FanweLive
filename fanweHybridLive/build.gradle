@@ -1,0 +1,243 @@
+//noinspection GradleDependency
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'bugly'
+bugly {
+    appId = '54681bc255' // 注册时分配的App ID
+    appKey = '9a95f4aa-9a6f-43e9-b369-12db7edfa44f' // 注册时分配的App Key
+}
+android {
+
+    useLibrary 'org.apache.http.legacy'
+
+    compileSdkVersion 27
+    buildToolsVersion '28.0.3'
+    aaptOptions {
+        cruncherEnabled = false
+        useNewCruncher = false
+    }
+    defaultConfig {
+        applicationId "com.fanwe.live"
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionCode 2017010312
+        versionName "2.5.1"
+        buildConfigField 'String', 'SERVER_URL_INIT_URL', '"http://www.xxx.com/app.php?act=init"'
+        buildConfigField 'Boolean', 'BgMusic', 'false'
+
+        multiDexEnabled true
+        flavorDimensions "default"
+        ndk{
+            // 设置支持的SO库架构
+            abiFilters 'armeabi'//,'armeabi-v7a' , 'x86', 'armeabi', 'x86_64', 'arm64-v8a'
+        }
+    }
+    //签名
+    signingConfigs {
+        release {
+            storeFile file("keystore.jks")
+            storePassword "jingJING961102"
+            keyAlias "yule"
+            keyPassword "jingJING961102"
+        }
+        debug {
+            storeFile file("keystore.jks")
+            storePassword "jingJING961102"
+            keyAlias "yule"
+            keyPassword "jingJING961102"
+        }
+    }
+
+    // WFT支付demo签名
+//    signingConfigs {
+//        release {
+//            storeFile file("demo.keystore")
+//            storePassword "android"
+//            keyAlias "demo"
+//            keyPassword "android"
+//        }
+//        release {
+//            storeFile file("demo.keystore")
+//            storePassword "android"
+//            keyAlias "demo"
+//            keyPassword "android"
+//        }
+//    }
+
+    buildTypes {
+        debug {
+            zipAlignEnabled false
+            minifyEnabled false
+            signingConfig signingConfigs.debug
+        }
+        release {
+            zipAlignEnabled true
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            signingConfig signingConfigs.release
+        }
+    }
+
+
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LGPL2.1'
+        exclude 'META-INF/library_release.kotlin_module'
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    dexOptions {
+        javaMaxHeapSize "2g"
+    }
+
+    productFlavors {
+//        uestcit{
+//            dimension "default"
+//            applicationId "com.uestcit.live"
+//            versionCode 2019041001
+//            versionName "2.5.9"
+//            buildConfigField 'String', 'SERVER_URL', '"http://140.143.121.5:9898/"'
+//            buildConfigField 'String', 'NotifyID', '"22"'
+//            buildConfigField 'String', 'app_id_tencent_live', '"1400087936"'
+//        }
+
+//        xinshijie{
+//            dimension "default"
+//            applicationId "com.xinshijie.live"
+//            versionCode 2019051001
+//            versionName "2.5.9"
+//            buildConfigField 'String', 'SERVER_URL', '"http://140.143.121.5:9898/"'
+//            buildConfigField 'String', 'NotifyID', '"22"'
+//            buildConfigField 'String', 'app_id_tencent_live', '"1400249447"'
+//        }
+//        miai{
+//            dimension "default"
+//            applicationId "com.miai.live"
+//            versionCode 2019042701
+//            versionName "2.5.9"
+//            buildConfigField 'String', 'SERVER_URL', '"http://yy.shysy.top"'
+//            buildConfigField 'String', 'NotifyID', '"22"'
+//            buildConfigField 'Boolean', 'BgMusic', 'true'
+//            buildConfigField 'String', 'app_id_tencent_live', '"1400087936"'
+//        }
+        huajian{
+            dimension "default"
+            applicationId "com.hua.live"
+            versionCode 2020061501
+            versionName "2.5.9"
+            buildConfigField 'String', 'SERVER_URL', '"http://yy.shysy.top"'
+            buildConfigField 'String', 'NotifyID', '"22"'
+            buildConfigField 'Boolean', 'BgMusic', 'true'
+            buildConfigField 'String', 'app_id_tencent_live', '"1400087936"'
+        }
+    }
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                // 输出apk名称为news_v1.0_2017-01-15_wandoujia.apk
+                def fileName = "${variant.name}_${variant.versionName}_${variant.versionCode}.apk"
+                outputFileName = fileName
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'org.xutils:xutils:3.5.0'
+    implementation(name: 'libraryAdapterHttp-release', ext: 'aar')
+    implementation(name: 'libraryPayAlipay-release', ext: 'aar')
+    implementation(name: 'libraryPayBaofoo-release', ext: 'aar')
+    implementation(name: 'libraryPayUnionpay-release', ext: 'aar')
+    implementation(name: 'libraryPhotoViewMaster-release', ext: 'aar')
+    implementation(name: 'libraryQrcodeZxing-release', ext: 'aar')
+    implementation(name: 'librarySocialUmeng-release', ext: 'aar')
+    implementation(name: 'pickerview-release', ext: 'aar')
+    implementation(name: 'PushSDK-release', ext: 'aar')
+    implementation(name: 'TimePickerDialog-release', ext: 'aar')
+    implementation(name: 'libraryIMTencent-release', ext: 'aar')
+    implementation(name: 'libraryMapTencent-release', ext: 'aar')
+    implementation(name: 'LiteAVSDK_Professional_5.4.6097', ext: 'aar')
+    implementation(name: 'fanwei-jubaosdk-release-v5.6', ext: 'aar')
+    // 需要依赖以下第三方库
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.daimajia.swipelayout:library:1.2.0@aar'
+    implementation 'com.github.ctiao:DanmakuFlameMaster:0.5.3'
+    //bilibili弹幕
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.1'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'com.google.android:flexbox:0.2.6'
+    implementation 'com.yalantis:ucrop:2.2.0'
+    //noinspection GradleDependency
+    implementation 'com.umeng.analytics:analytics:latest.integration'
+    implementation 'com.ksyun.media:libksylive-java:2.2.5'
+    implementation 'com.ksyun.media:libksylive-armv7a:2.2.5'
+    implementation 'com.android.support:multidex:1.0.1'
+    implementation project(':libGame')
+    implementation project(':libApp')
+    //----------com.fanwe.android start----------
+    implementation 'com.github.zj565061763:blocker:1.0.3'
+    implementation 'com.github.zj565061763:cache:1.0.14'
+    implementation 'com.github.zj565061763:dialog:1.0.10'
+    implementation 'com.github.zj565061763:player:1.0.3'
+    implementation 'com.github.zj565061763:pulltorefresh:1.0.33'
+    implementation 'com.github.zj565061763:recorder:1.0.3'
+    implementation 'com.github.zj565061763:select:1.1.3'
+    implementation 'com.github.zj565061763:span:1.0.7'
+    implementation 'com.github.zj565061763:statelayout:1.0.6'
+    implementation 'com.github.zj565061763:switchbutton:1.0.15'
+    implementation 'com.github.zj565061763:viewpager:1.0.18'
+    //----------com.fanwe.android end----------
+    //图片圆角处理
+    implementation 'com.makeramen:roundedimageview:2.3.0'
+    //鲜肉===============================================start
+    implementation 'com.makeramen:roundedimageview:2.3.0'
+    implementation('com.android.support:cardview-v7:27.1.1') {
+        force = true
+    }
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+        //noinspection GradleDependency
+        implementation 'io.reactivex.rxjava2:rxjava:2.0.1'
+    implementation 'zlc.season:rxdownload2:2.0.0-beta4'
+    implementation 'com.pnikosis:materialish-progress:1.7'
+    implementation 'me.iwf.photopicker:PhotoPicker:0.9.5@aar'
+    implementation 'com.cocosw:bottomsheet:1.0'
+    implementation('com.android.support:appcompat-v7:27.1.1') {
+        force = true
+    }
+    implementation('com.android.support:design:27.1.1') {
+        force = true
+    }
+    implementation 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:2.0.24@aar'
+    implementation 'jp.wasabeef:glide-transformations:2.0.1'
+    implementation 'com.scottsu:states-layout:1.1.5'
+    //鲜肉===============================================end
+    //BaseRecyclerViewAdapterHelper
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
+    //动画
+    implementation 'com.github.yyued:SVGAPlayer-Android:2.3.0'
+    //noinspection GradleDependency
+    // compile 'com.tencent.bugly:crashreport:latest.release'
+    //noinspection GradleDependency
+    //compile 'com.tencent.bugly:nativecrashreport:latest.release'
+}
+repositories {
+    mavenCentral()
+}

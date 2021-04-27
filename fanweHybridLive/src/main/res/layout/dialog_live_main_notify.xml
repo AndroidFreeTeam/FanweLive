@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@drawable/bg_live_main_notify"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/tv_notify_title"
+        android:layout_width="match_parent"
+        android:text="登入公告"
+        android:gravity="center"
+        android:background="@drawable/bg_live_main_notify_title"
+        android:textSize="@dimen/base_textsize_18"
+        android:textColor="@color/white"
+        android:layout_height="50dp" />
+
+    <LinearLayout
+        android:id="@+id/ll_buttom"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:layout_height="50dp">
+        <Button
+            android:id="@+id/btn_confirm"
+            android:layout_width="120dp"
+            android:textSize="@dimen/base_textsize_18"
+            android:text="知道了"
+            android:background="@drawable/bg_live_main_notify_button"
+            android:textColor="@color/white"
+            android:layout_height="40dp" />
+    </LinearLayout>
+
+    <com.fanwe.library.webview.CustomWebView
+        android:id="@+id/webview"
+        android:layout_width="match_parent"
+        android:layout_below="@id/tv_notify_title"
+        android:layout_above="@id/ll_buttom"
+        android:layout_height="match_parent"/>
+</RelativeLayout>

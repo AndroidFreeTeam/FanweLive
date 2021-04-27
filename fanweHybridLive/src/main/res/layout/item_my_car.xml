@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="15dp"
+    android:layout_marginRight="15dp"
+    android:background="@drawable/bg_white_rectangle_radius_25"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.AppCompatRadioButton
+        android:id="@+id/rbDef"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="默认"/>
+
+    <ImageView
+        android:id="@+id/ivPlay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="15dp"
+        android:src="@drawable/ic_seat_drive_play" />
+    <RelativeLayout
+        android:id="@+id/rlCar"
+        android:layout_width="match_parent"
+        android:layout_below="@id/ivPlay"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_height="120dp">
+
+        <ImageView
+            android:id="@+id/ivCar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:scaleType="centerInside"
+            tools:src="@drawable/ic_anim_car2_body" />
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rlCar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:textColor="#333333"
+        android:textSize="18sp"
+        tools:text="法拉利" />
+
+    <TextView
+        android:id="@+id/tvPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="#824DB6"
+        android:textSize="16sp"
+        tools:text="598.0元/30天" />
+
+</RelativeLayout>
